@@ -1,0 +1,72 @@
+#1/bin/python3
+import boto3
+
+def deploy_instances():
+
+
+    ec2 = boto3.resource('ec2')
+
+    # create a new EC2 instance
+    instances = ec2.create_instances(
+         ImageId='ami-02b0338c435c8e9b0',
+         MinCount=1,
+         MaxCount=int(input("how many instance?")),
+         InstanceType=input("what type?"),
+         KeyName=input("enter keypair")
+ )
+
+def describe_instance():
+    def describe_instance():
+        client = boto3.client('ec2')
+        response = client.describe_instances()
+        for r in response['Reservations']:
+            for i in r['Instances']:
+                print("ID: " + i['InstanceId'] + "\nIP Address: " + i[
+                    'PublicIpAddress'] + "\n----------------------------------\n")
+
+def stop_instance():
+    ids = ['i-0bec2a0bf000bb71c']
+    ec2 = boto3.resource('ec2')
+    ec2.instances.filter(InstanceIds = ids).stop()
+
+
+
+def destroy_instance():
+    ids = ['i-0bec2a0bf000bb71c']
+    ec2 = boto3.resource('ec2')
+    ec2.instances.filter(InstanceIds = ids).terminating()
+
+
+
+
+def start_instance():
+     instances=input("enter the ids of the instances that you want to stop:")
+     ids = [instances]
+     ec2 = boto3.resource('ec2')
+     ec2.instances.filter(InstanceIds = ids).start()
+
+
+def menu():
+     while(True):
+        choice=input("Menu :\n1.Describe EC2 \n2.Deploy EC2 \n3.Destroy instace\n4.stop instance \n5.start instance \n")
+        if(choice=="1"):
+            sleep(2)
+            print("now we will show your instances:...\n")
+            describe_instance()
+        elif(choice=="2"):
+            deploy_instance()
+        elif(choice=="3"):
+            destroy_instance()
+        elif(choice=="4"):
+            stop_instance()
+        elif(choice=="5"):
+            start_instance()
+        else:
+            print("Enter 1-5 only!!...\n")
+            continue
+        exit=input("do you want to exit? yes/no\n")
+        if(exit=="yes"):
+         print("Bye Bye...\n")
+        break
+
+menu()
