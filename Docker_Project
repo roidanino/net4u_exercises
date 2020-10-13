@@ -1,0 +1,139 @@
+
+#/bin/bash
+
+
+# Docker Script ! ! !
+
+        echo -e "hello user Welcome to Docker script"
+        sleep 1
+        echo "..."
+        sleep 1
+        echo "..."
+
+# user interface
+
+        echo -e "what you want to execute? "
+        sleep 1
+        echo -e "1)Install a Image\n2)delete a image\n3)Update a Image\n4)Run a container"
+        read lab
+
+# option #1
+        if [ $lab == "1" ]
+
+        then
+
+                echo -e "Choose your Image : \n1)Jenkins\n2)Centos\n3)Nginx\n4)Dockerui\n5)Adejonge/Helloworld"
+                read user
+
+                if [ $user == "1" ]
+
+                then
+                        echo "choose your best Jenkins image : "
+                        read jenkins
+                        sudo docker pull $jenkins > /dev/null
+                        echo "Finished"
+
+
+
+                elif [ $user == "2" ]
+              
+
+                then
+                        echo "choose your best Centos image : "
+                        read centos
+                        sudo docker pull $centos > /dev/null
+                        echo "Finished"
+
+
+                elif [ $user == "3" ]
+
+                then
+                        echo "choose your best Nginx image : "
+                        read nginx
+                        sudo docker pull $nginx > /dev/null
+                        echo "Finished"
+
+
+                elif [ $user == "4" ]
+
+                then
+                        echo "choose your best Dockerui image : "
+                        read dockerui
+                        sudo docker pull $dockerui > /dev/null
+                        echo "Finished"
+
+
+                elif [ $user == "5" ]
+
+                then
+                        echo "choose your best adejonge image : "
+                        read adejonge
+                        sudo docker pull $adejonge > /dev/null
+                        echo "Finished"
+                fi
+
+
+#option #2
+
+        elif [ $lab == "2" ]
+
+        then
+                echo "this this all the images"
+                sudo docker images
+                sleep 2
+                echo " What image you want to delete? "
+                read delete
+                sudo docker rmi $delete > /dev/null
+                echo "Finished"
+
+
+
+
+#option #3
+
+        elif [ $lab == "3" ]
+
+        then
+                echo "what image you want to update?"
+                read update
+                sudo  docker pull $update > /dev/null
+                echo "Finished"
+
+
+
+#option 4
+
+        elif [ $lab == "4" ]
+
+        then
+                echo "what image do you need?"
+                read image
+                echo "redirect from which port"
+                read redirect
+                echo "to what port do you want?"
+                read port
+                echo "how many containers?"
+                read container
+
+
+                if [ $image == "dockerui" ]
+
+                then
+                        for i in $( eval echo {1..$container} )
+
+                        do
+                            sudo docker run -d -p $redirect:$port -v /var/run/docker.sock:/docker.sock --name dockerui abhlnav/dockerui:latest -e"docker.sock"
+                            echo " Finished "
+                        done
+                else
+                        for z in $( eval echo {1..$container} )
+
+                        do
+
+                        sudo docker run -d -p $redirect:$port $image
+                        echo " Finished "
+
+                        done
+                fi
+
+        fi
